@@ -1,0 +1,96 @@
+<div class="row">
+    <div class="col-md-12">
+        <h1 class="mb-4">Dashboard</h1>
+    </div>
+</div>
+
+<!-- Alertes -->
+<% if (alertes && alertes.length > 0) { %>
+<div class="row mb-4">
+    <div class="col-md-12">
+        <div class="alert alert-warning">
+            <h5><i class="bi bi-exclamation-triangle"></i> Alertes stock insuffisant</h5>
+            <ul>
+                <% alertes.forEach(produit => { %>
+                <li><strong><%= produit.nom %></strong> : Stock actuel <%= produit.quantite %> / Seuil <%= produit.seuilAlerte %></li>
+                <% }) %>
+            </ul>
+        </div>
+    </div>
+</div>
+<% } %>
+
+<!-- Statistiques -->
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card text-white bg-primary">
+            <div class="card-body">
+                <h5 class="card-title">Produits</h5>
+                <p class="card-text display-6"><%= stats.nombreProduits %></p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-success">
+            <div class="card-body">
+                <h5 class="card-title">Mouvements</h5>
+                <p class="card-text display-6"><%= stats.nombreMouvements %></p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-warning">
+            <div class="card-body">
+                <h5 class="card-title">Stock Insuffisant</h5>
+                <p class="card-text display-6"><%= stats.stockInsuffisant ? stats.stockInsuffisant.length : 0 %></p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-info">
+            <div class="card-body">
+                <h5 class="card-title">Valeur Stock</h5>
+                <p class="card-text"><%= stats.valeurStock.toFixed(2) %> FCFA</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Derniers mouvements -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5>Derniers mouvements</h5>
+            </div>
+            <div class="card-body">
+                <% if (mouvements && mouvements.length > 0) { %>
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Type</th>
+                                <th>Quantité</th>
+                                <th>Commentaire</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% mouvements.slice(0, 5).forEach(m => { %>
+                            <tr>
+                                <td><%= m.getDateStr() %></td>
+                                <td><span class="badge bg-<%= m.type === 'ENTREE' ? 'success' : m.type === 'SORTIE' ? 'danger' : 'warning' %>"><%= m.type %></span></td>
+                                <td><%= m.quantite %></td>
+                                <td><%= m.commentaire %></td>
+                            </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+                <% } else { %>
+                <p class="text-muted">Aucun mouvement enregistré</p>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</div>

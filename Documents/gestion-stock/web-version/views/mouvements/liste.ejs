@@ -1,0 +1,53 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Historique des mouvements</h1>
+    <div>
+        <a href="/mouvements/entree" class="btn btn-success">
+            <i class="bi bi-arrow-down-circle"></i> Entrée
+        </a>
+        <a href="/mouvements/sortie" class="btn btn-danger">
+            <i class="bi bi-arrow-up-circle"></i> Sortie
+        </a>
+        <a href="/mouvements/ajustement" class="btn btn-warning">
+            <i class="bi bi-arrow-left-right"></i> Ajustement
+        </a>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <% if (mouvements && mouvements.length > 0) { %>
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Produit</th>
+                        <th>Type</th>
+                        <th>Quantité</th>
+                        <th>Commentaire</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% mouvements.forEach(m => { 
+                        const produit = produits.find(p => p.id === m.produitId);
+                    %>
+                    <tr>
+                        <td><%= m.getDateStr() %></td>
+                        <td><%= produit ? produit.nom : m.produitId %></td>
+                        <td>
+                            <span class="badge bg-<%= m.type === 'ENTREE' ? 'success' : m.type === 'SORTIE' ? 'danger' : 'warning' %>">
+                                <%= m.type %>
+                            </span>
+                        </td>
+                        <td><%= m.quantite %></td>
+                        <td><%= m.commentaire || '-' %></td>
+                    </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+        <% } else { %>
+        <p class="text-muted text-center">Aucun mouvement enregistré</p>
+        <% } %>
+    </div>
+</div>

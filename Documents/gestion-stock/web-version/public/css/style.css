@@ -1,0 +1,80 @@
+body {
+    background-color: #f8f9fa;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}
+
+.card {
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.card:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    transition: box-shadow 0.3s ease;
+}
+
+.badge {
+    font-size: 0.8rem;
+}
+
+.table-responsive {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.footer {
+    margin-top: auto;
+}
+
+.btn-group .btn {
+    border-radius: 0;
+}
+
+.btn-group .btn:first-child {
+    border-radius: 5px 0 0 5px;
+}
+
+.btn-group .btn:last-child {
+    border-radius: 0 5px 5px 0;
+}
+
+/* Animation pour les alertes */
+.alert {
+    animation: slideDown 0.5s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Style pour les cartes de statistiques */
+.display-6 {
+    font-size: 2.5rem;
+    font-weight: 300;
+}
+
+/* Style pour les badges dans les listes */
+.list-group-item .badge {
+    font-size: 0.9rem;
+    padding: 0.5rem 0.8rem;
+}
+
+/* Responsive pour les petits écrans */
+@media (max-width: 768px) {
+    .display-6 {
+        font-size: 1.8rem;
+    }
+}

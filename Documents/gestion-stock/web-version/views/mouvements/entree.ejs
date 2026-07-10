@@ -1,0 +1,43 @@
+<div class="row">
+    <div class="col-md-6 mx-auto">
+        <div class="card">
+            <div class="card-header">
+                <h4><i class="bi bi-arrow-down-circle text-success"></i> Enregistrer une entrée</h4>
+            </div>
+            <div class="card-body">
+                <% if (erreur) { %>
+                <div class="alert alert-danger"><%= erreur %></div>
+                <% } %>
+                
+                <form action="/mouvements/entree" method="POST">
+                    <div class="mb-3">
+                        <label for="produitId" class="form-label">Produit *</label>
+                        <select class="form-select" id="produitId" name="produitId" required>
+                            <option value="">Sélectionnez un produit</option>
+                            <% produits.forEach(p => { %>
+                            <option value="<%= p.id %>"><%= p.nom %> (Stock: <%= p.quantite %>)</option>
+                            <% }) %>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="quantite" class="form-label">Quantité *</label>
+                        <input type="number" class="form-control" id="quantite" name="quantite" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="commentaire" class="form-label">Commentaire</label>
+                        <input type="text" class="form-control" id="commentaire" name="commentaire" placeholder="Entrée de stock">
+                    </div>
+                    
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-success">
+                            <i class="bi bi-save"></i> Enregistrer l'entrée
+                        </button>
+                        <a href="/mouvements" class="btn btn-secondary">Annuler</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

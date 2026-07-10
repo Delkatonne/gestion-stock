@@ -1,0 +1,137 @@
+<div class="row mb-4">
+    <div class="col-md-12">
+        <h1>Rapports et Statistiques</h1>
+    </div>
+</div>
+
+<!-- Statistiques -->
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card text-white bg-primary">
+            <div class="card-body">
+                <h5 class="card-title">Total Produits</h5>
+                <p class="card-text display-6"><%= statistiques.nombreProduits %></p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-success">
+            <div class="card-body">
+                <h5 class="card-title">Total Mouvements</h5>
+                <p class="card-text display-6"><%= statistiques.nombreMouvements %></p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-warning">
+            <div class="card-body">
+                <h5 class="card-title">Stock Insuffisant</h5>
+                <p class="card-text display-6"><%= statistiques.stockInsuffisant ? statistiques.stockInsuffisant.length : 0 %></p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-info">
+            <div class="card-body">
+                <h5 class="card-title">Valeur Stock</h5>
+                <p class="card-text"><%= statistiques.valeurStock.toFixed(2) %> FCFA</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Répartition par catégorie -->
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5>Répartition par catégorie</h5>
+            </div>
+            <div class="card-body">
+                <ul class="list-group">
+                    <% Object.keys(statistiques.parCategorie).forEach(cat => { %>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <%= cat %>
+                        <span class="badge bg-primary rounded-pill"><%= statistiques.parCategorie[cat] %></span>
+                    </li>
+                    <% }) %>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5>Produits en stock insuffisant</h5>
+            </div>
+            <div class="card-body">
+                <% if (statistiques.stockInsuffisant && statistiques.stockInsuffisant.length > 0) { %>
+                <ul class="list-group">
+                    <% statistiques.stockInsuffisant.forEach(p => { %>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <%= p.nom %>
+                        <span class="badge bg-danger rounded-pill"><%= p.quantite %> / <%= p.seuilAlerte %></span>
+                    </li>
+                    <% }) %>
+                </ul>
+                <% } else { %>
+                <p class="text-muted">Aucun produit en stock insuffisant</p>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Détail des produits -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5>Tous les produits</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nom</th>
+                                <th>Catégorie</th>
+                                <th>Quantité</th>
+                                <th>Prix</th>
+                                <th>Valeur</th>
+                                <th>Statut</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% rapport.produits.forEach(p => { 
+                                const cat = categories.find(c => c.id === p.categorieId);
+                            %>
+                            <tr>
+                                <td><%= p.id %></td>
+                                <td><%= p.nom %></td>
+                                <td><%= cat ? cat.nom : p.categorieId %></td>
+                                <td><%= p.quantite %></td>
+                                <td><%= p.prix.toFixed(2) %> FCFA</td>
+                                <td><%= (p.prix * p.quantite).toFixed(2) %> FCFA</td>
+                                <td>
+                                    <span class="badge bg-<%= p.estEnStockInsuffisant() ? 'danger' : 'success' %>">
+                                        <%= p.estEnStockInsuffisant() ? 'Alerte' : 'OK' %>
+                                    </span>
+                                </td>
+                            </tr>
+                            <% }) %>
+                        </tbody>
+                        <tfoot>
+                            <tr class="table-info">
+                                <td colspan="5"><strong>Valeur totale du stock</strong></td>
+                                <td colspan="2"><strong><%= rapport.valeurStock.toFixed(2) %> FCFA</strong></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,20 @@
+{
+  "name": "gestion-stock-web",
+  "version": "1.0.0",
+  "description": "Système de gestion de stock en temps réel",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "ejs": "^3.1.9",
+    "express-ejs-layouts": "^2.5.1",
+    "uuid": "^9.0.1",
+    "method-override": "^3.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
