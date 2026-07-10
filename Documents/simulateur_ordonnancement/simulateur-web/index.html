@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulateur d'Ordonnancement de Processus</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🖥️ Simulateur d'Ordonnancement</h1>
+            <p>Système d'exploitation - Multithreading simulé</p>
+        </header>
+
+        <div class="main-content">
+            <!-- Panneau de configuration -->
+            <div class="config-panel">
+                <h2>Configuration</h2>
+                
+                <div class="form-group">
+                    <label for="algorithm">Algorithme d'ordonnancement :</label>
+                    <select id="algorithm" class="form-control">
+                        <option value="FIFO">FIFO (First In First Out)</option>
+                        <option value="SJF">SJF (Shortest Job First)</option>
+                        <option value="PRIORITY">Priorité</option>
+                        <option value="ROUND_ROBIN">Round Robin</option>
+                    </select>
+                </div>
+
+                <div class="form-group" id="quantum-group" style="display: none;">
+                    <label for="quantum">Quantum (Round Robin) :</label>
+                    <input type="number" id="quantum" class="form-control" value="2" min="1" max="10">
+                </div>
+
+                <div class="form-group">
+                    <label for="speed">Vitesse de simulation :</label>
+                    <select id="speed" class="form-control">
+                        <option value="2000">Lent</option>
+                        <option value="1000" selected>Normal</option>
+                        <option value="500">Rapide</option>
+                        <option value="200">Très rapide</option>
+                    </select>
+                </div>
+
+                <div class="process-input">
+                    <h3>Ajouter un processus</h3>
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label>Temps d'arrivée</label>
+                            <input type="number" id="arrival" class="form-control" value="0" min="0">
+                        </div>
+                        <div class="input-group">
+                            <label>Durée (Burst)</label>
+                            <input type="number" id="burst" class="form-control" value="5" min="1">
+                        </div>
+                        <div class="input-group">
+                            <label>Priorité</label>
+                            <input type="number" id="priority" class="form-control" value="1" min="1">
+                        </div>
+                    </div>
+                    <button id="add-process" class="btn btn-primary">+ Ajouter</button>
+                    <button id="add-preset" class="btn btn-secondary">📋 Préréglages</button>
+                </div>
+
+                <div class="action-buttons">
+                    <button id="start-simulation" class="btn btn-success">▶ Démarrer</button>
+                    <button id="pause-simulation" class="btn btn-warning" disabled>⏸️ Pause</button>
+                    <button id="stop-simulation" class="btn btn-danger" disabled>⏹️ Arrêter</button>
+                    <button id="reset-simulation" class="btn btn-info">🔄 Réinitialiser</button>
+                </div>
+            </div>
+
+            <!-- Zone de visualisation -->
+            <div class="visualization-panel">
+                <div class="stats-bar">
+                    <div class="stat-item">
+                        <span class="stat-label">Temps actuel</span>
+                        <span class="stat-value" id="current-time">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Processus terminés</span>
+                        <span class="stat-value" id="completed-count">0/0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Temps d'attente moyen</span>
+                        <span class="stat-value" id="avg-waiting">0.00</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Temps de rotation moyen</span>
+                        <span class="stat-value" id="avg-turnaround">0.00</span>
+                    </div>
+                </div>
+
+                <div class="queues-container">
+                    <div class="queue-card">
+                        <h3>📥 Nouveaux</h3>
+                        <div class="queue-content" id="new-queue"></div>
+                    </div>
+                    <div class="queue-card">
+                        <h3>✅ Prêts</h3>
+                        <div class="queue-content" id="ready-queue"></div>
+                    </div>
+                    <div class="queue-card">
+                        <h3>⚙️ En cours</h3>
+                        <div class="queue-content" id="running-queue"></div>
+                    </div>
+                    <div class="queue-card">
+                        <h3>🏁 Terminés</h3>
+                        <div class="queue-content" id="terminated-queue"></div>
+                    </div>
+                </div>
+
+                <div class="gantt-chart" id="gantt-chart">
+                    <h3>Diagramme de Gantt</h3>
+                    <div class="gantt-content" id="gantt-content"></div>
+                </div>
+
+                <div class="log-console">
+                    <h3>📋 Console</h3>
+                    <div class="log-content" id="log-content"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal pour les préréglages -->
+    <div id="preset-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Préréglages de processus</h2>
+            <div class="preset-options">
+                <button class="preset-btn" data-preset="basic">
+                    <strong>Basique</strong>
+                    <span>5 processus simples</span>
+                </button>
+                <button class="preset-btn" data-preset="mixed">
+                    <strong>Mixte</strong>
+                    <span>Arrivées échelonnées</span>
+                </button>
+                <button class="preset-btn" data-preset="intensive">
+                    <strong>Intensif</strong>
+                    <span>10 processus</span>
+                </button>
+                <button class="preset-btn" data-preset="priority-test">
+                    <strong>Test Priorité</strong>
+                    <span>Priorités variées</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/process.js"></script>
+    <script src="js/scheduler.js"></script>
+    <script src="js/simulator.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
