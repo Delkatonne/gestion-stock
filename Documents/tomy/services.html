@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adechinan Food - Services</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding-top: 76px;
+            background: #f8f9fa;
+        }
+        .navbar {
+            padding: 10px 0;
+            background: #1a1a2e !important;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.3);
+        }
+        .navbar-brand img {
+            max-height: 50px;
+            width: auto;
+            transition: transform 0.3s;
+        }
+        .navbar-brand img:hover {
+            transform: scale(1.05);
+        }
+        .navbar-brand {
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1.3rem;
+        }
+        .navbar-nav .nav-link {
+            color: rgba(255,255,255,0.8) !important;
+            font-weight: 500;
+            padding: 8px 18px !important;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        .navbar-nav .nav-link:hover {
+            color: #d4a373 !important;
+            background: rgba(255,255,255,0.05);
+        }
+        .navbar-nav .nav-link.active {
+            color: #d4a373 !important;
+            background: rgba(212, 163, 115, 0.15);
+        }
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #25d366;
+            color: white;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+            z-index: 999;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .whatsapp-float:hover {
+            background: #128C7E;
+            color: white;
+            transform: scale(1.08);
+        }
+        .footer {
+            background: #1a1a2e;
+            color: #eee;
+            padding: 30px 0;
+            margin-top: 40px;
+        }
+        .footer a {
+            color: #ffb347;
+            text-decoration: none;
+        }
+        .footer a:hover {
+            color: #ff8c00;
+        }
+        .service-card {
+            transition: transform 0.3s;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+        .service-card img {
+            height: 200px;
+            object-fit: cover;
+            width: 100%;
+        }
+        .service-card .btn-outline-warning {
+            color: #d4a373;
+            border-color: #d4a373;
+        }
+        .service-card .btn-outline-warning:hover {
+            background: #d4a373;
+            color: white;
+        }
+        @media (max-width: 576px) {
+            .whatsapp-float { width: 50px; height: 50px; font-size: 26px; bottom: 20px; right: 20px; }
+            .navbar-brand span { font-size: 1rem; }
+            .navbar-brand img { max-height: 40px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== NAVBAR FIXE ===== -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="logo.png" alt="Adechinan Food" style="max-height:90px;" onerror="this.style.display='none'">
+                <span class="ms-2">Adechinan Food</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navMenu">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="fas fa-home me-1"></i>Accueil
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="services.html">
+                            <i class="fas fa-th-list me-1"></i>Services
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">
+                            <i class="fas fa-envelope me-1"></i>Contact
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== SERVICES ===== -->
+    <section class="container">
+        <h2 class="text-center fw-bold mb-5" style="color: #d4a373;">Nos services culinaires</h2>
+        <div class="row g-4">
+            <!-- Gâteaux -->
+            <div class="col-md-6 col-lg-3">
+                <div class="service-card card h-100 border-0">
+                    <img src="media/gateaux/gateau1.jpg" class="card-img-top" alt="Gâteaux" onerror="this.src='https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&auto=format&fit=crop'">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Gâteaux</h5>
+                        <p class="card-text">Gâteaux moelleux, personnalisables pour toutes vos occasions.</p>
+                        <a href="gateaux.html" class="btn btn-outline-warning btn-sm">Voir les gâteaux</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tartes -->
+            <div class="col-md-6 col-lg-3">
+                <div class="service-card card h-100 border-0">
+                    <img src="media/tartes/tarte1.jpg" class="card-img-top" alt="Tartes" onerror="this.src='https://images.unsplash.com/photo-1551024506-0bccd828d307?w=400&auto=format&fit=crop'">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Tartes</h5>
+                        <p class="card-text">Tartes sucrées ou salées, avec des fruits de saison.</p>
+                        <a href="tartes.html" class="btn btn-outline-warning btn-sm">Voir les tartes</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sandwiches -->
+            <div class="col-md-6 col-lg-3">
+                <div class="service-card card h-100 border-0">
+                    <img src="media/sandwiches/sandwich1.jpg" class="card-img-top" alt="Sandwiches" onerror="this.src='https://images.unsplash.com/photo-1550507992-eb63ffee0847?w=400&auto=format&fit=crop'">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Sandwiches</h5>
+                        <p class="card-text">Sandwiches savoureux, préparés avec des ingrédients de qualité.</p>
+                        <a href="sandwiches.html" class="btn btn-outline-warning btn-sm">Voir les sandwiches</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Salades -->
+            <div class="col-md-6 col-lg-3">
+                <div class="service-card card h-100 border-0">
+                    <img src="media/salades/salade1.jpg" class="card-img-top" alt="Salades" onerror="this.src='https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&auto=format&fit=crop'">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Salades</h5>
+                        <p class="card-text">Salades de fruits, de légumes, fraîches et vitaminées.</p>
+                        <a href="salades.html" class="btn btn-outline-warning btn-sm">Voir les salades</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="container text-center">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Adechinan Food</h5>
+                    <p>La gastronomie à votre porte.</p>
+                </div>
+                <div class="col-md-6">
+                    <h5>Contact</h5>
+                    <p><i class="fas fa-phone"></i> +229 01 57 92 97 03</p>
+                    <p><i class="fas fa-map-pin"></i> Porto-Novo, Bénin</p>
+                    <p><i class="fas fa-truck"></i> Livraison partout au Bénin</p>
+                </div>
+            </div>
+            <hr class="bg-secondary">
+            <p class="small mb-0">&copy; 2026 Adechinan Food. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/229157929703" target="_blank" class="whatsapp-float" title="WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

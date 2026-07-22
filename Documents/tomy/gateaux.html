@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adechinan Food - Nos Gâteaux</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding-top: 70px;
+            background: #f8f9fa;
+        }
+        .navbar-brand img {
+            max-height: 50px;
+            width: auto;
+            transition: transform 0.3s;
+        }
+        .navbar-brand img:hover {
+            transform: scale(1.05);
+        }
+        .navbar-brand {
+            cursor: pointer;
+        }
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #25d366;
+            color: white;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+            z-index: 999;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .whatsapp-float:hover {
+            background: #128C7E;
+            color: white;
+            transform: scale(1.08);
+        }
+        .footer {
+            background: #1a1a2e;
+            color: #eee;
+            padding: 30px 0;
+            margin-top: 40px;
+        }
+        .footer a {
+            color: #ffb347;
+            text-decoration: none;
+        }
+        .footer a:hover {
+            color: #ff8c00;
+        }
+        .gallery-card {
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            background: white;
+            height: 100%;
+        }
+        .gallery-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        }
+        .gallery-card img {
+            height: 220px;
+            object-fit: cover;
+            width: 100%;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .gallery-card img:hover {
+            transform: scale(1.02);
+        }
+        .gallery-card .card-body {
+            padding: 15px;
+        }
+        .gallery-card .card-body h5 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .page-title {
+            color: #d4a373;
+            border-bottom: 3px solid #d4a373;
+            display: inline-block;
+            padding-bottom: 8px;
+        }
+        .btn-commander {
+            background: #25d366;
+            color: white;
+            border: none;
+            padding: 6px 18px;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+            width: 100%;
+        }
+        .btn-commander:hover {
+            background: #128C7E;
+            color: white;
+            transform: scale(1.02);
+        }
+        .btn-commander i {
+            margin-right: 6px;
+        }
+        .search-box {
+            max-width: 400px;
+            margin: 0 auto 30px auto;
+        }
+        .search-box input {
+            border-radius: 25px;
+            padding: 10px 20px;
+            border: 2px solid #e0e0e0;
+            transition: all 0.3s;
+        }
+        .search-box input:focus {
+            border-color: #d4a373;
+            box-shadow: 0 0 0 3px rgba(212, 163, 115, 0.2);
+        }
+        .product-count {
+            font-size: 0.9rem;
+            color: #888;
+            margin-bottom: 20px;
+        }
+        .modal-img {
+            width: 100%;
+            max-height: 80vh;
+            object-fit: contain;
+        }
+        .modal-header {
+            border-bottom: none;
+        }
+        .modal-content {
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        .modal-title {
+            color: #d4a373;
+            font-weight: 600;
+        }
+        .category-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(212, 163, 115, 0.9);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            z-index: 2;
+        }
+        .card-img-wrapper {
+            position: relative;
+            overflow: hidden;
+        }
+        @media (max-width: 576px) {
+            .whatsapp-float {
+                width: 50px;
+                height: 50px;
+                font-size: 26px;
+                bottom: 20px;
+                right: 20px;
+            }
+            .gallery-card img {
+                height: 170px;
+            }
+            .btn-commander {
+                font-size: 0.75rem;
+                padding: 5px 12px;
+            }
+        }
+        .gallery-card {
+            animation: fadeInUp 0.5s ease;
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== NAVBAR ===== -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="logo.png" alt="Adechinan Food" style="max-height:90px;" onerror="this.style.display='none'">
+                <span class="ms-2 fw-bold">Adechinan Food</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navMenu">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="index.html"><i class="fas fa-home me-1"></i>Accueil</a></li>
+                    <li class="nav-item"><a class="nav-link" href="services.html"><i class="fas fa-th-list me-1"></i>Services</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html"><i class="fas fa-envelope me-1"></i>Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== GALERIE GÂTEAUX ===== -->
+    <section class="container" style="margin-top: 100px; margin-bottom: 60px;">
+        <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+            <div>
+                <h2 class="page-title fw-bold">
+                    <i class="fas fa-cake me-2"></i>Nos Gâteaux
+                </h2>
+                <p class="text-muted mt-2">Découvrez notre sélection de gâteaux artisanaux</p>
+            </div>
+            <a href="services.html" class="btn btn-outline-secondary btn-sm mt-2 mt-sm-0">
+                <i class="fas fa-arrow-left me-1"></i> Retour aux services
+            </a>
+        </div>
+
+        <div class="search-box">
+            <div class="input-group">
+                <span class="input-group-text bg-white border-end-0"><i class="fas fa-search text-muted"></i></span>
+                <input type="text" id="searchInput" class="form-control" placeholder="Rechercher un gâteau..." onkeyup="filterProducts()">
+            </div>
+        </div>
+
+        <p class="product-count text-center" id="productCount">Affichage de <span id="visibleCount">0</span> gâteaux</p>
+
+        <div class="row g-3" id="productGrid">
+            <!-- Gâteau 1 -->
+            <div class="col-md-4 col-sm-6 product-item" data-name="Gâteau Anif">
+                <div class="gallery-card card border-0">
+                    <div class="card-img-wrapper">
+                        <img src="media/gateaux/anif.jpeg" alt="Gâteau Anif" onclick="openModal(this.src, 'Gâteau Anif')" onerror="this.src='https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&auto=format&fit=crop'">
+                        <span class="category-badge">Classique</span>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5>Gâteau Anif</h5>
+                        <button class="btn-commander" onclick="commander('Gâteau Anif')">
+                            <i class="fab fa-whatsapp"></i> Commander
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gâteau 2 -->
+            <div class="col-md-4 col-sm-6 product-item" data-name="Gâteau d'anniversaire">
+                <div class="gallery-card card border-0">
+                    <div class="card-img-wrapper">
+                        <img src="media/gateaux/aniversaire.jpeg" alt="Gâteau d'anniversaire" onclick="openModal(this.src, 'Gâteau d'anniversaire')" onerror="this.src='https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&auto=format&fit=crop'">
+                        <span class="category-badge">Anniversaire</span>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5>Gâteau d'anniversaire</h5>
+                        <button class="btn-commander" onclick="commander('Gâteau d\'anniversaire')">
+                            <i class="fab fa-whatsapp"></i> Commander
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gâteau 3 -->
+            <div class="col-md-4 col-sm-6 product-item" data-name="Bûche de Noël au chocolat">
+                <div class="gallery-card card border-0">
+                    <div class="card-img-wrapper">
+                        <img src="media/gateaux/bûche de noel au chocolat.jpg" alt="Bûche de Noël au chocolat" onclick="openModal(this.src, 'Bûche de Noël au chocolat')" onerror="this.src='https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&auto=format&fit=crop'">
+                        <span class="category-badge">Noël</span>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5>Bûche de Noël au chocolat</h5>
+                        <button class="btn-commander" onclick="commander('Bûche de Noël au chocolat')">
+                            <i class="fab fa-whatsapp"></i> Commander
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gâteau 4 -->
+            <div class="col-md-4 col-sm-6 product-item" data-name="Croissant">
+                <div class="gallery-card card border-0">
+                    <div class="card-img-wrapper">
+                        <img src="media/gateaux/croissant.jpg" alt="Croissant" onclick="openModal(this.src, 'Croissant')" onerror="this.src='https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&auto=format&fit=crop'">
+                        <span class="category-badge">Viennoiserie</span>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5>Croissant</h5>
+                        <button class="btn-commander" onclick="commander('Croissant')">
+                            <i class="fab fa-whatsapp"></i> Commander
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gâteau 5 -->
+            <div class="col-md-4 col-sm-6 product-item" data-name="Gâteau Framboisier">
+                <div class="gallery-card card border-0">
+                    <div class="card-img-wrapper">
+                        <img src="media/gateaux/framboisier gateau.jpg" alt="Gâteau Framboisier" onclick="openModal(this.src, 'Gâteau Framboisier')" onerror="this.src='https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&auto=format&fit=crop'">
+                        <span class="category-badge">Fruits</span>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5>Gâteau Framboisier</h5>
+                        <button class="btn-commander" onclick="commander('Gâteau Framboisier')">
+                            <i class="fab fa-whatsapp"></i> Commander
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gâteau 6 -->
+            <div class="col-md-4 col-sm-6 product-item" data-name="Gâteau aux carottes">
+                <div class="gallery-card card border-0">
+                    <div class="card-img-wrapper">
+                        <img src="media/gateaux/gateau au carottes.jpg" alt="Gâteau aux carottes" onclick="openModal(this.src, 'Gâteau aux carottes')" onerror="this.src='https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&auto=format&fit=crop'">
+                        <span class="category-badge">Légume</span>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5>Gâteau aux carottes</h5>
+                        <button class="btn-commander" onclick="commander('Gâteau aux carottes')">
+                            <i class="fab fa-whatsapp"></i> Commander
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gâteau 7 -->
+            <div class="col-md-4 col-sm-6 product-item" data-name="Gâteau au chocolat sans farine">
+                <div class="gallery-card card border-0">
+                    <div class="card-img-wrapper">
+                        <img src="media/gateaux/gateau au chocolat sans farine.jpeg" alt="Gâteau au chocolat sans farine" onclick="openModal(this.src, 'Gâteau au chocolat sans farine')" onerror="this.src='https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&auto=format&fit=crop'">
+                        <span class="category-badge">Sans gluten</span>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5>Gâteau au chocolat sans farine</h5>
+                        <button class="btn-commander" onclick="commander('Gâteau au chocolat sans farine')">
+                            <i class="fab fa-whatsapp"></i> Commander
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gâteau 8 -->
+            <div class="col-md-4 col-sm-6 product-item" data-name="Gâteau au fromage">
+                <div class="gallery-card card border-0">
+                    <div class="card-img-wrapper">
+                        <img src="media/gateaux/gateau au frommage.jpg" alt="Gâteau au fromage" onclick="openModal(this.src, 'Gâteau au fromage')" onerror="this.src='https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&auto=format&fit=crop'">
+                        <span class="category-badge">Fromage</span>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5>Gâteau au fromage</h5>
+                        <button class="btn-commander" onclick="commander('Gâteau au fromage')">
+                            <i class="fab fa-whatsapp"></i> Commander
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gâteau 9 -->
+            <div class="col-md-4 col-sm-6 product-item" data-name="Gâteau au chocolat">
+                <div class="gallery-card card border-0">
+                    <div class="card-img-wrapper">
+                        <img src="media/gateaux/gateau au chocolat.jpeg" alt="Gâteau au chocolat" onclick="openModal(this.src, 'Gâteau au chocolat')" onerror="this.src='https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&auto=format&fit=crop'">
+                        <span class="category-badge">Chocolat</span>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5>Gâteau au chocolat</h5>
+                        <button class="btn-commander" onclick="commander('Gâteau au chocolat')">
+                            <i class="fab fa-whatsapp"></i> Commander
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gâteau 10 -->
+            <div class="col-md-4 col-sm-6 product-item" data-name="Gâteau aux confettis">
+                <div class="gallery-card card border-0">
+                    <div class="card-img-wrapper">
+                        <img src="media/gateaux/gateau aux confettis.jpeg" alt="Gâteau aux confettis" onclick="openModal(this.src, 'Gâteau aux confettis')" onerror="this.src='https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&auto=format&fit=crop'">
+                        <span class="category-badge">Fête</span>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5>Gâteau aux confettis</h5>
+                        <button class="btn-commander" onclick="commander('Gâteau aux confettis')">
+                            <i class="fab fa-whatsapp"></i> Commander
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gâteau 11 -->
+            <div class="col-md-4 col-sm-6 product-item" data-name="Gâteau basque">
+                <div class="gallery-card card border-0">
+                    <div class="card-img-wrapper">
+                        <img src="media/gateaux/gateau basque.jpeg" alt="Gâteau basque" onclick="openModal(this.src, 'Gâteau basque')" onerror="this.src='https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&auto=format&fit=crop'">
+                        <span class="category-badge">Traditionnel</span>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5>Gâteau basque</h5>
+                        <button class="btn-commander" onclick="commander('Gâteau basque')">
+                            <i class="fab fa-whatsapp"></i> Commander
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gâteau 12 -->
+            <div class="col-md-4 col-sm-6 product-item" data-name="Cake au chocolat">
+                <div class="gallery-card card border-0">
+                    <div class="card-img-wrapper">
+                        <img src="media/gateaux/gateau cake au chocolat.jpeg" alt="Cake au chocolat" onclick="openModal(this.src, 'Cake au chocolat')" onerror="this.src='https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&auto=format&fit=crop'">
+                        <span class="category-badge">Chocolat</span>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5>Cake au chocolat</h5>
+                        <button class="btn-commander" onclick="commander('Cake au chocolat')">
+                            <i class="fab fa-whatsapp"></i> Commander
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gâteau 13 -->
+            <div class="col-md-4 col-sm-6 product-item" data-name="Cœur rose framboises">
+                <div class="gallery-card card border-0">
+                    <div class="card-img-wrapper">
+                        <img src="media/gateaux/gateau coeur rose framboises.jpeg" alt="Cœur rose framboises" onclick="openModal(this.src, 'Cœur rose framboises')" onerror="this.src='https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&auto=format&fit=crop'">
+                        <span class="category-badge">Romantique</span>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5>Cœur rose framboises</h5>
+                        <button class="btn-commander" onclick="commander('Cœur rose framboises')">
+                            <i class="fab fa-whatsapp"></i> Commander
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gâteau 14 -->
+            <div class="col-md-4 col-sm-6 product-item" data-name="Gâteau crémeux">
+                <div class="gallery-card card border-0">
+                    <div class="card-img-wrapper">
+                        <img src="media/gateaux/gateau cremeux.jpeg" alt="Gâteau crémeux" onclick="openModal(this.src, 'Gâteau crémeux')" onerror="this.src='https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&auto=format&fit=crop'">
+                        <span class="category-badge">Crémeux</span>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5>Gâteau crémeux</h5>
+                        <button class="btn-commander" onclick="commander('Gâteau crémeux')">
+                            <i class="fab fa-whatsapp"></i> Commander
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gâteau 15 -->
+            <div class="col-md-4 col-sm-6 product-item" data-name="Gâteau d'anniversaire fondant">
+                <div class="gallery-card card border-0">
+                    <div class="card-img-wrapper">
+                        <img src="media/gateaux/gateau d'aniversaire fondant.jpeg" alt="Gâteau d'anniversaire fondant" onclick="openModal(this.src, 'Gâteau d\'anniversaire fondant')" onerror="this.src='https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&auto=format&fit=crop'">
+                        <span class="category-badge">Anniversaire</span>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5>Gâteau d'anniversaire fondant</h5>
+                        <button class="btn-commander" onclick="commander('Gâteau d\'anniversaire fondant')">
+                            <i class="fab fa-whatsapp"></i> Commander
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gâteau 16 -->
+            <div class="col-md-4 col-sm-6 product-item" data-name="Gâteau d'anniversaire">
+                <div class="gallery-card card border-0">
+                    <div class="card-img-wrapper">
+                        <img src="media/gateaux/gateau d'aniversaire.jpeg" alt="Gâteau d'anniversaire" onclick="openModal(this.src, 'Gâteau d\'anniversaire')" onerror="this.src='https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&auto=format&fit=crop'">
+                        <span class="category-badge">Anniversaire</span>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5>Gâteau d'anniversaire</h5>
+                        <button class="btn-commander" onclick="commander('Gâteau d\'anniversaire')">
+                            <i class="fab fa-whatsapp"></i> Commander
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gâteau 17 -->
+            <div class="col-md-4 col-sm-6 product-item" data-name="Gâteau étincellant">
+                <div class="gallery-card card border-0">
+                    <div class="card-img-wrapper">
+                        <img src="media/gateaux/gateau etincellant.jpg" alt="Gâteau étincellant" onclick="openModal(this.src, 'Gâteau étincellant')" onerror="this.src='https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&auto=format&fit=crop'">
+                        <span class="category-badge">Étincellant</span>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5>Gâteau étincellant</h5>
+                        <button class="btn-commander" onclick="commander('Gâteau étincellant')">
+                            <i class="fab fa-whatsapp"></i> Commander
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gâteau 18 -->
+            <div class="col-md-4 col-sm-6 product-item" data-name="Gâteau flan">
+                <div class="gallery-card card border-0">
+                    <div class="card-img-wrapper">
+                        <img src="media/gateaux/gateau flan.jpeg" alt="Gâteau flan" onclick="openModal(this.src, 'Gâteau flan')" onerror="this.src='https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&auto=format&fit=crop'">
+                        <span class="category-badge">Flan</span>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5>Gâteau flan</h5>
+                        <button class="btn-commander" onclick="commander('Gâteau flan')">
+                            <i class="fab fa-whatsapp"></i> Commander
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gâteau 19 -->
+            <div class="col-md-4 col-sm-6 product-item" data-name="Gâteau hyper moelleux avec ganache">
+                <div class="gallery-card card border-0">
+                    <div class="card-img-wrapper">
+                        <img src="media/gateaux/gateau hyper moelleu avec ganache.jpeg" alt="Gâteau hyper moelleux avec ganache" onclick="openModal(this.src, 'Gâteau hyper moelleux avec ganache')" onerror="this.src='https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&auto=format&fit=crop'">
+                        <span class="category-badge">Moelleux</span>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5>Gâteau hyper moelleux avec ganache</h5>
+                        <button class="btn-commander" onclick="commander('Gâteau hyper moelleux avec ganache')">
+                            <i class="fab fa-whatsapp"></i> Commander
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gâteau 20 -->
+            <div class="col-md-4 col-sm-6 product-item" data-name="Gâteau tigré ou zébré">
+                <div class="gallery-card card border-0">
+                    <div class="card-img-wrapper">
+                        <img src="media/gateaux/gateau tigré ou zébré.jpeg" alt="Gâteau tigré ou zébré" onclick="openModal(this.src, 'Gâteau tigré ou zébré')" onerror="this.src='https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&auto=format&fit=crop'">
+                        <span class="category-badge">Original</span>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5>Gâteau tigré ou zébré</h5>
+                        <button class="btn-commander" onclick="commander('Gâteau tigré ou zébré')">
+                            <i class="fab fa-whatsapp"></i> Commander
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gâteau 21 -->
+            <div class="col-md-4 col-sm-6 product-item" data-name="Gâteau roulé à la confiture">
+                <div class="gallery-card card border-0">
+                    <div class="card-img-wrapper">
+                        <img src="media/gateaux/gateau roulé a la confiture.jpeg" alt="Gâteau roulé à la confiture" onclick="openModal(this.src, 'Gâteau roulé à la confiture')" onerror="this.src='https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&auto=format&fit=crop'">
+                        <span class="category-badge">Confiture</span>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5>Gâteau roulé à la confiture</h5>
+                        <button class="btn-commander" onclick="commander('Gâteau roulé à la confiture')">
+                            <i class="fab fa-whatsapp"></i> Commander
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gâteau 22 -->
+            <div class="col-md-4 col-sm-6 product-item" data-name="Gâteau moelleux">
+                <div class="gallery-card card border-0">
+                    <div class="card-img-wrapper">
+                        <img src="media/gateaux/gateau moelleux.jpeg" alt="Gâteau moelleux" onclick="openModal(this.src, 'Gâteau moelleux')" onerror="this.src='https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&auto=format&fit=crop'">
+                        <span class="category-badge">Moelleux</span>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5>Gâteau moelleux</h5>
+                        <button class="btn-commander" onclick="commander('Gâteau moelleux')">
+                            <i class="fab fa-whatsapp"></i> Commander
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gâteau 23 -->
+            <div class="col-md-4 col-sm-6 product-item" data-name="Gâteau tuxedo">
+                <div class="gallery-card card border-0">
+                    <div class="card-img-wrapper">
+                        <img src="media/gateaux/gateau tuxedo.jpeg" alt="Gâteau tuxedo" onclick="openModal(this.src, 'Gâteau tuxedo')" onerror="this.src='https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&auto=format&fit=crop'">
+                        <span class="category-badge">Élégant</span>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5>Gâteau tuxedo</h5>
+                        <button class="btn-commander" onclick="commander('Gâteau tuxedo')">
+                            <i class="fab fa-whatsapp"></i> Commander
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gâteau 24 -->
+            <div class="col-md-4 col-sm-6 product-item" data-name="Gâteau à deux étages">
+                <div class="gallery-card card border-0">
+                    <div class="card-img-wrapper">
+                        <img src="media/gateaux/gateau à deux étages.jpeg" alt="Gâteau à deux étages" onclick="openModal(this.src, 'Gâteau à deux étages')" onerror="this.src='https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&auto=format&fit=crop'">
+                        <span class="category-badge">Étages</span>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5>Gâteau à deux étages</h5>
+                        <button class="btn-commander" onclick="commander('Gâteau à deux étages')">
+                            <i class="fab fa-whatsapp"></i> Commander
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gâteau 25 -->
+            <div class="col-md-4 col-sm-6 product-item" data-name="Gâteau à la vanille">
+                <div class="gallery-card card border-0">
+                    <div class="card-img-wrapper">
+                        <img src="media/gateaux/gateau à la vanille.jpg" alt="Gâteau à la vanille" onclick="openModal(this.src, 'Gâteau à la vanille')" onerror="this.src='https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&auto=format&fit=crop'">
+                        <span class="category-badge">Vanille</span>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5>Gâteau à la vanille</h5>
+                        <button class="btn-commander" onclick="commander('Gâteau à la vanille')">
+                            <i class="fab fa-whatsapp"></i> Commander
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gâteau 26 -->
+            <div class="col-md-4 col-sm-6 product-item" data-name="Gâteau d'anniversaire simple">
+                <div class="gallery-card card border-0">
+                    <div class="card-img-wrapper">
+                        <img src="media/gateaux/gateau-aniversaire simple.jpeg" alt="Gâteau d'anniversaire simple" onclick="openModal(this.src, 'Gâteau d\'anniversaire simple')" onerror="this.src='https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&auto=format&fit=crop'">
+                        <span class="category-badge">Anniversaire</span>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5>Gâteau d'anniversaire simple</h5>
+                        <button class="btn-commander" onclick="commander('Gâteau d\'anniversaire simple')">
+                            <i class="fab fa-whatsapp"></i> Commander
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gâteau 27 -->
+            <div class="col-md-4 col-sm-6 product-item" data-name="Gâteau magic">
+                <div class="gallery-card card border-0">
+                    <div class="card-img-wrapper">
+                        <img src="media/gateaux/gateaux magic.jpeg" alt="Gâteau magic" onclick="openModal(this.src, 'Gâteau magic')" onerror="this.src='https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&auto=format&fit=crop'">
+                        <span class="category-badge">Magic</span>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5>Gâteau magic</h5>
+                        <button class="btn-commander" onclick="commander('Gâteau magic')">
+                            <i class="fab fa-whatsapp"></i> Commander
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gâteau 28 -->
+            <div class="col-md-4 col-sm-6 product-item" data-name="Gâteau aux pommes">
+                <div class="gallery-card card border-0">
+                    <div class="card-img-wrapper">
+                        <img src="media/gateaux/gteau au pomme.jpeg" alt="Gâteau aux pommes" onclick="openModal(this.src, 'Gâteau aux pommes')" onerror="this.src='https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&auto=format&fit=crop'">
+                        <span class="category-badge">Fruits</span>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5>Gâteau aux pommes</h5>
+                        <button class="btn-commander" onclick="commander('Gâteau aux pommes')">
+                            <i class="fab fa-whatsapp"></i> Commander
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gâteau 29 -->
+            <div class="col-md-4 col-sm-6 product-item" data-name="Pain au chocolat">
+                <div class="gallery-card card border-0">
+                    <div class="card-img-wrapper">
+                        <img src="media/gateaux/pain-au-chocolat.jpg" alt="Pain au chocolat" onclick="openModal(this.src, 'Pain au chocolat')" onerror="this.src='https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&auto=format&fit=crop'">
+                        <span class="category-badge">Viennoiserie</span>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5>Pain au chocolat</h5>
+                        <button class="btn-commander" onclick="commander('Pain au chocolat')">
+                            <i class="fab fa-whatsapp"></i> Commander
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gâteau 30 -->
+            <div class="col-md-4 col-sm-6 product-item" data-name="Strudel">
+                <div class="gallery-card card border-0">
+                    <div class="card-img-wrapper">
+                        <img src="media/gateaux/strudel.jpg" alt="Strudel" onclick="openModal(this.src, 'Strudel')" onerror="this.src='https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&auto=format&fit=crop'">
+                        <span class="category-badge">Traditionnel</span>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5>Strudel</h5>
+                        <button class="btn-commander" onclick="commander('Strudel')">
+                            <i class="fab fa-whatsapp"></i> Commander
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="noResults" class="text-center py-5" style="display:none;">
+            <i class="fas fa-search fa-3x text-muted mb-3"></i>
+            <h4 class="text-muted">Aucun gâteau trouvé</h4>
+            <p class="text-muted">Essayez avec un autre mot-clé</p>
+        </div>
+
+    </section>
+
+    <!-- ===== MODAL POUR AGRANDIR LES PHOTOS ===== -->
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle">Gâteau</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <img src="" alt="Agrandissement" class="modal-img" id="modalImage">
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-success btn-commander" id="modalCommanderBtn" onclick="commanderFromModal()">
+                        <i class="fab fa-whatsapp me-2"></i> Commander ce gâteau
+                    </button>
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="container text-center">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Adechinan Food</h5>
+                    <p>La gastronomie à votre porte.</p>
+                </div>
+                <div class="col-md-6">
+                    <h5>Contact</h5>
+                    <p><i class="fas fa-phone"></i> +229 01 57 92 97 03</p>
+                    <p><i class="fas fa-map-pin"></i> Porto-Novo, Bénin</p>
+                    <p><i class="fas fa-truck"></i> Livraison partout au Bénin</p>
+                </div>
+            </div>
+            <hr class="bg-secondary">
+            <p class="small mb-0">&copy; 2026 Adechinan Food. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <!-- ===== WHATSAPP FLOTTANT ===== -->
+    <a href="https://wa.me/229157929703" target="_blank" class="whatsapp-float" title="WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- ===== SCRIPTS ===== -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const phoneNumber = '229157929703';
+        let currentModalProduct = '';
+
+        function commander(productName) {
+            const message = `Bonjour Adechinan Food,%0A%0AJe souhaite commander : *${productName}*%0A%0APouvez-vous me donner plus d'informations sur ce produit ?%0A%0AMerci !`;
+            window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
+        }
+
+        function openModal(imgSrc, productName) {
+            document.getElementById('modalImage').src = imgSrc;
+            document.getElementById('modalTitle').textContent = productName;
+            currentModalProduct = productName;
+            const modal = new bootstrap.Modal(document.getElementById('imageModal'));
+            modal.show();
+        }
+
+        function commanderFromModal() {
+            if (currentModalProduct) {
+                commander(currentModalProduct);
+            }
+        }
+
+        function filterProducts() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const items = document.getElementsByClassName('product-item');
+            let visibleCount = 0;
+
+            for (let item of items) {
+                const name = item.getAttribute('data-name').toLowerCase();
+                if (name.includes(input)) {
+                    item.style.display = '';
+                    visibleCount++;
+                } else {
+                    item.style.display = 'none';
+                }
+            }
+
+            document.getElementById('visibleCount').textContent = visibleCount;
+            document.getElementById('noResults').style.display = visibleCount === 0 ? 'block' : 'none';
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const totalItems = document.getElementsByClassName('product-item').length;
+            document.getElementById('visibleCount').textContent = totalItems;
+        });
+    </script>
+</body>
+</html>

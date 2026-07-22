@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adechinan Food - Accueil</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding-top: 76px;
+            background: #f8f9fa;
+        }
+        /* ===== NAVBAR FIXE ===== */
+        .navbar {
+            padding: 10px 0;
+            background: #1a1a2e !important;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.3);
+        }
+        .navbar-brand img {
+            max-height: 50px;
+            width: auto;
+            transition: transform 0.3s;
+        }
+        .navbar-brand img:hover {
+            transform: scale(1.05);
+        }
+        .navbar-brand {
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1.3rem;
+        }
+        .navbar-nav .nav-link {
+            color: rgba(255,255,255,0.8) !important;
+            font-weight: 500;
+            padding: 8px 18px !important;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        .navbar-nav .nav-link:hover {
+            color: #d4a373 !important;
+            background: rgba(255,255,255,0.05);
+        }
+        .navbar-nav .nav-link.active {
+            color: #d4a373 !important;
+            background: rgba(212, 163, 115, 0.15);
+        }
+        /* ===== WHATSAPP FLOTTANT ===== */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #25d366;
+            color: white;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+            z-index: 999;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .whatsapp-float:hover {
+            background: #128C7E;
+            color: white;
+            transform: scale(1.08);
+        }
+        .footer {
+            background: #1a1a2e;
+            color: #eee;
+            padding: 30px 0;
+            margin-top: 40px;
+        }
+        .footer a {
+            color: #ffb347;
+            text-decoration: none;
+        }
+        .footer a:hover {
+            color: #ff8c00;
+        }
+        .hero-section {
+            background: linear-gradient(135deg, #fff8f0 0%, #f5ebe0 100%);
+            border-radius: 20px;
+            padding: 50px 30px;
+            margin-bottom: 40px;
+        }
+        .feature-card {
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-radius: 15px;
+            padding: 30px 20px;
+            background: white;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            height: 100%;
+        }
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+        }
+        .feature-card i {
+            color: #d4a373;
+        }
+        .service-preview-card {
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            background: white;
+            height: 100%;
+            cursor: pointer;
+        }
+        .service-preview-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        }
+        .service-preview-card img {
+            height: 200px;
+            object-fit: cover;
+            width: 100%;
+        }
+        .service-preview-card .card-body {
+            padding: 20px;
+        }
+        .service-preview-card .card-body h5 {
+            font-weight: 600;
+            color: #333;
+        }
+        .service-preview-card a {
+            text-decoration: none;
+            color: inherit;
+        }
+        .btn-outline-warning-custom {
+            color: #d4a373;
+            border-color: #d4a373;
+        }
+        .btn-outline-warning-custom:hover {
+            background: #d4a373;
+            color: white;
+        }
+        @media (max-width: 576px) {
+            .whatsapp-float { width: 50px; height: 50px; font-size: 26px; bottom: 20px; right: 20px; }
+            .hero-section { padding: 30px 15px; }
+            .hero-section h1 { font-size: 1.8rem; }
+            .navbar-brand span { font-size: 1rem; }
+            .navbar-brand img { max-height: 40px; }
+        }
+        .gallery-card { animation: fadeInUp 0.5s ease; }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== NAVBAR FIXE ===== -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="logo.png" alt="Adechinan Food" style="max-height:90px;" onerror="this.style.display='none'">
+                <span class="ms-2">Adechinan Food</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navMenu">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.html">
+                            <i class="fas fa-home me-1"></i>Accueil
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="services.html">
+                            <i class="fas fa-th-list me-1"></i>Services
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">
+                            <i class="fas fa-envelope me-1"></i>Contact
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== CONTENU DE L'ACCUEIL ===== -->
+    <section class="container" style="margin-top: 100px; margin-bottom: 60px;">
+        <div class="hero-section text-center">
+            <div class="row align-items-center">
+                <div class="col-lg-8 mx-auto">
+                    <h1 class="display-4 fw-bold" style="color: #2d2d2d;">
+                        Bienvenue chez <span style="color: #d4a373;">Adechinan Food</span>
+                    </h1>
+                    <p class="lead mt-3" style="color: #555;">
+                        La gastronomie béninoise revisitée avec passion. 
+                        Des plats authentiques, des saveurs uniques, préparés avec des ingrédients frais.
+                    </p>
+                    <div class="d-flex flex-wrap justify-content-center gap-3 mt-4">
+                        <span class="badge bg-warning text-dark p-2"><i class="fas fa-map-pin me-1"></i> Porto-Novo</span>
+                        <span class="badge bg-success p-2"><i class="fas fa-truck me-1"></i> Livraison partout au Bénin</span>
+                        <span class="badge bg-info p-2"><i class="fas fa-phone me-1"></i> +229 01 57 92 97 03</span>
+                    </div>
+                    <div class="mt-4">
+                        <a href="services.html" class="btn btn-warning btn-lg me-2">
+                            <i class="fas fa-utensils me-2"></i>Découvrir nos services
+                        </a>
+                        <a href="contact.html" class="btn btn-outline-secondary btn-lg">
+                            <i class="fas fa-envelope me-2"></i>Nous contacter
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="text-center fw-bold mb-4" style="color: #d4a373;">Pourquoi choisir Adechinan Food ?</h3>
+        <div class="row g-4 mb-5">
+            <div class="col-md-4">
+                <div class="feature-card text-center">
+                    <i class="fas fa-utensils fa-3x mb-3"></i>
+                    <h5>Recettes authentiques</h5>
+                    <p class="text-muted">Des plats inspirés de la tradition béninoise avec une touche moderne.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card text-center">
+                    <i class="fas fa-truck fa-3x mb-3"></i>
+                    <h5>Livraison rapide</h5>
+                    <p class="text-muted">Nous livrons dans tout le Bénin, chaud et à l'heure.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card text-center">
+                    <i class="fas fa-star fa-3x mb-3"></i>
+                    <h5>Qualité premium</h5>
+                    <p class="text-muted">Des ingrédients frais et sélectionnés pour une expérience gustative exceptionnelle.</p>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="text-center fw-bold mb-4" style="color: #d4a373;">Nos spécialités</h3>
+        <p class="text-center text-muted mb-4">Découvrez notre sélection de produits artisanaux</p>
+        
+        <div class="row g-4">
+            <div class="col-md-3 col-sm-6">
+                <a href="gateaux.html" class="text-decoration-none">
+                    <div class="service-preview-card">
+                        <img src="media/gateaux/gateau1.jpg" alt="Gâteaux" onerror="this.src='https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&auto=format&fit=crop'">
+                        <div class="card-body text-center">
+                            <h5><i class="fas fa-cake me-2" style="color: #d4a373;"></i>Gâteaux</h5>
+                            <p class="text-muted small">Moelleux et personnalisables</p>
+                            <span class="btn btn-outline-warning-custom btn-sm">Voir la galerie</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <a href="tartes.html" class="text-decoration-none">
+                    <div class="service-preview-card">
+                        <img src="media/tartes/tarte1.jpg" alt="Tartes" onerror="this.src='https://images.unsplash.com/photo-1551024506-0bccd828d307?w=400&auto=format&fit=crop'">
+                        <div class="card-body text-center">
+                            <h5><i class="fas fa-pie-chart me-2" style="color: #d4a373;"></i>Tartes</h5>
+                            <p class="text-muted small">Sucrées ou salées</p>
+                            <span class="btn btn-outline-warning-custom btn-sm">Voir la galerie</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <a href="sandwiches.html" class="text-decoration-none">
+                    <div class="service-preview-card">
+                        <img src="media/sandwiches/sandwich1.jpg" alt="Sandwiches" onerror="this.src='https://images.unsplash.com/photo-1550507992-eb63ffee0847?w=400&auto=format&fit=crop'">
+                        <div class="card-body text-center">
+                            <h5><i class="fas fa-bread-slice me-2" style="color: #d4a373;"></i>Sandwiches</h5>
+                            <p class="text-muted small">Savoureux et garnis</p>
+                            <span class="btn btn-outline-warning-custom btn-sm">Voir la galerie</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <a href="salades.html" class="text-decoration-none">
+                    <div class="service-preview-card">
+                        <img src="media/salades/salade1.jpg" alt="Salades" onerror="this.src='https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&auto=format&fit=crop'">
+                        <div class="card-body text-center">
+                            <h5><i class="fas fa-leaf me-2" style="color: #d4a373;"></i>Salades</h5>
+                            <p class="text-muted small">Fraîches et vitaminées</p>
+                            <span class="btn btn-outline-warning-custom btn-sm">Voir la galerie</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-12">
+                <div class="p-4 p-md-5 rounded-4" style="background: linear-gradient(135deg, #d4a373, #b8834f); color: white;">
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <h3 class="fw-bold"><i class="fas fa-shopping-bag me-2"></i>Prêt à commander ?</h3>
+                            <p class="mb-0">Contactez-nous via WhatsApp pour passer votre commande ou poser vos questions.</p>
+                        </div>
+                        <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                            <a href="https://wa.me/229157929703" target="_blank" class="btn btn-light btn-lg fw-bold">
+                                <i class="fab fa-whatsapp me-2" style="color: #25d366;"></i>WhatsApp
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="container text-center">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Adechinan Food</h5>
+                    <p>La gastronomie à votre porte.</p>
+                </div>
+                <div class="col-md-6">
+                    <h5>Contact</h5>
+                    <p><i class="fas fa-phone"></i> +229 01 57 92 97 03</p>
+                    <p><i class="fas fa-map-pin"></i> Porto-Novo, Bénin</p>
+                    <p><i class="fas fa-truck"></i> Livraison partout au Bénin</p>
+                </div>
+            </div>
+            <hr class="bg-secondary">
+            <p class="small mb-0">&copy; 2026 Adechinan Food. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/229157929703" target="_blank" class="whatsapp-float" title="WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

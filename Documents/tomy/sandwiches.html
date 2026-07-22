@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adechinan Food - Nos Sandwiches</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding-top: 70px;
+            background: #f8f9fa;
+        }
+        .navbar-brand img {
+            max-height: 50px;
+            width: auto;
+            transition: transform 0.3s;
+        }
+        .navbar-brand img:hover {
+            transform: scale(1.05);
+        }
+        .navbar-brand {
+            cursor: pointer;
+        }
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #25d366;
+            color: white;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+            z-index: 999;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .whatsapp-float:hover {
+            background: #128C7E;
+            color: white;
+            transform: scale(1.08);
+        }
+        .footer {
+            background: #1a1a2e;
+            color: #eee;
+            padding: 30px 0;
+            margin-top: 40px;
+        }
+        .footer a {
+            color: #ffb347;
+            text-decoration: none;
+        }
+        .footer a:hover {
+            color: #ff8c00;
+        }
+        .gallery-card {
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            background: white;
+            height: 100%;
+        }
+        .gallery-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        }
+        .gallery-card img {
+            height: 220px;
+            object-fit: cover;
+            width: 100%;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .gallery-card img:hover {
+            transform: scale(1.02);
+        }
+        .gallery-card .card-body {
+            padding: 15px;
+        }
+        .gallery-card .card-body h5 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .page-title {
+            color: #d4a373;
+            border-bottom: 3px solid #d4a373;
+            display: inline-block;
+            padding-bottom: 8px;
+        }
+        .btn-commander {
+            background: #25d366;
+            color: white;
+            border: none;
+            padding: 6px 18px;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+            width: 100%;
+        }
+        .btn-commander:hover {
+            background: #128C7E;
+            color: white;
+            transform: scale(1.02);
+        }
+        .btn-commander i {
+            margin-right: 6px;
+        }
+        .search-box {
+            max-width: 400px;
+            margin: 0 auto 30px auto;
+        }
+        .search-box input {
+            border-radius: 25px;
+            padding: 10px 20px;
+            border: 2px solid #e0e0e0;
+            transition: all 0.3s;
+        }
+        .search-box input:focus {
+            border-color: #d4a373;
+            box-shadow: 0 0 0 3px rgba(212, 163, 115, 0.2);
+        }
+        .product-count {
+            font-size: 0.9rem;
+            color: #888;
+            margin-bottom: 20px;
+        }
+        .modal-img {
+            width: 100%;
+            max-height: 80vh;
+            object-fit: contain;
+        }
+        .modal-header {
+            border-bottom: none;
+        }
+        .modal-content {
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        .modal-title {
+            color: #d4a373;
+            font-weight: 600;
+        }
+        .category-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(212, 163, 115, 0.9);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            z-index: 2;
+        }
+        .card-img-wrapper {
+            position: relative;
+            overflow: hidden;
+        }
+        @media (max-width: 576px) {
+            .whatsapp-float {
+                width: 50px;
+                height: 50px;
+                font-size: 26px;
+                bottom: 20px;
+                right: 20px;
+            }
+            .gallery-card img {
+                height: 170px;
+            }
+            .btn-commander {
+                font-size: 0.75rem;
+                padding: 5px 12px;
+            }
+        }
+        .gallery-card {
+            animation: fadeInUp 0.5s ease;
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== NAVBAR ===== -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="logo.png" alt="Adechinan Food" style="max-height:90px;" onerror="this.style.display='none'">
+                <span class="ms-2 fw-bold">Adechinan Food</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navMenu">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="index.html"><i class="fas fa-home me-1"></i>Accueil</a></li>
+                    <li class="nav-item"><a class="nav-link" href="services.html"><i class="fas fa-th-list me-1"></i>Services</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html"><i class="fas fa-envelope me-1"></i>Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== GALERIE SANDWICHES ===== -->
+    <section class="container" style="margin-top: 100px; margin-bottom: 60px;">
+        <!-- En-tête -->
+        <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+            <div>
+                <h2 class="page-title fw-bold">
+                    <i class="fas fa-bread-slice me-2"></i>Nos Sandwiches
+                </h2>
+                <p class="text-muted mt-2">Découvrez notre sélection de sandwiches artisanaux</p>
+            </div>
+            <a href="services.html" class="btn btn-outline-secondary btn-sm mt-2 mt-sm-0">
+                <i class="fas fa-arrow-left me-1"></i> Retour aux services
+            </a>
+        </div>
+
+        <!-- Barre de recherche -->
+        <div class="search-box">
+            <div class="input-group">
+                <span class="input-group-text bg-white border-end-0"><i class="fas fa-search text-muted"></i></span>
+                <input type="text" id="searchInput" class="form-control" placeholder="Rechercher un sandwich..." onkeyup="filterProducts()">
+            </div>
+        </div>
+
+        <!-- Compteur -->
+        <p class="product-count text-center">Affichage de <span id="visibleCount">0</span> sandwiches</p>
+
+        <!-- Grille -->
+        <div class="row g-3" id="productGrid">
+            <!-- Sandwich 1 -->
+            <div class="col-md-4 col-sm-6 product-item" data-name="Sandwich au jambon">
+                <div class="gallery-card card border-0">
+                    <div class="card-img-wrapper">
+                        <img src="media/sandwiches/sandwich au jambon.jpeg" alt="Sandwich au jambon" onclick="openModal(this.src, 'Sandwich au jambon')" onerror="this.src='https://images.unsplash.com/photo-1550507992-eb63ffee0847?w=400&auto=format&fit=crop'">
+                        <span class="category-badge">Classique</span>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5>Sandwich au jambon</h5>
+                        <button class="btn-commander" onclick="commander('Sandwich au jambon')">
+                            <i class="fab fa-whatsapp"></i> Commander
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sandwich 2 -->
+            <div class="col-md-4 col-sm-6 product-item" data-name="Burger au beurre">
+                <div class="gallery-card card border-0">
+                    <div class="card-img-wrapper">
+                        <img src="media/sandwich/burger au beure.jpeg" alt="Burger au beurre" onclick="openModal(this.src, 'Burger au beurre')" onerror="this.src='https://images.unsplash.com/photo-1550507992-eb63ffee0847?w=400&auto=format&fit=crop'">
+                        <span class="category-badge">Burger</span>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5>Burger au beurre</h5>
+                        <button class="btn-commander" onclick="commander('Burger au beurre')">
+                            <i class="fab fa-whatsapp"></i> Commander
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sandwich 3 -->
+            <div class="col-md-4 col-sm-6 product-item" data-name="Burger au poulet">
+                <div class="gallery-card card border-0">
+                    <div class="card-img-wrapper">
+                        <img src="media/sandwich/burger au poulet.jpeg" alt="Burger au poulet" onclick="openModal(this.src, 'Burger au poulet')" onerror="this.src='https://images.unsplash.com/photo-1550507992-eb63ffee0847?w=400&auto=format&fit=crop'">
+                        <span class="category-badge">Burger</span>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5>Burger au poulet</h5>
+                        <button class="btn-commander" onclick="commander('Burger au poulet')">
+                            <i class="fab fa-whatsapp"></i> Commander
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sandwich 4 -->
+            <div class="col-md-4 col-sm-6 product-item" data-name="Burger chiffonade de jambon">
+                <div class="gallery-card card border-0">
+                    <div class="card-img-wrapper">
+                        <img src="media/sandwich/burger chiffonade de jambon.jpeg" alt="Burger chiffonade de jambon" onclick="openModal(this.src, 'Burger chiffonade de jambon')" onerror="this.src='https://images.unsplash.com/photo-1550507992-eb63ffee0847?w=400&auto=format&fit=crop'">
+                        <span class="category-badge">Burger</span>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5>Burger chiffonade de jambon</h5>
+                        <button class="btn-commander" onclick="commander('Burger chiffonade de jambon')">
+                            <i class="fab fa-whatsapp"></i> Commander
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sandwich 5 -->
+            <div class="col-md-4 col-sm-6 product-item" data-name="Burger de boeuf">
+                <div class="gallery-card card border-0">
+                    <div class="card-img-wrapper">
+                        <img src="media/sandwich/burger de boeuf.jpeg" alt="Burger de boeuf" onclick="openModal(this.src, 'Burger de boeuf')" onerror="this.src='https://images.unsplash.com/photo-1550507992-eb63ffee0847?w=400&auto=format&fit=crop'">
+                        <span class="category-badge">Burger</span>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5>Burger de boeuf</h5>
+                        <button class="btn-commander" onclick="commander('Burger de boeuf')">
+                            <i class="fab fa-whatsapp"></i> Commander
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sandwich 6 -->
+            <div class="col-md-4 col-sm-6 product-item" data-name="Burger de porc">
+                <div class="gallery-card card border-0">
+                    <div class="card-img-wrapper">
+                        <img src="media/sandwich/burger de porc.jpeg" alt="Burger de porc" onclick="openModal(this.src, 'Burger de porc')" onerror="this.src='https://images.unsplash.com/photo-1550507992-eb63ffee0847?w=400&auto=format&fit=crop'">
+                        <span class="category-badge">Burger</span>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5>Burger de porc</h5>
+                        <button class="btn-commander" onclick="commander('Burger de porc')">
+                            <i class="fab fa-whatsapp"></i> Commander
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sandwich 7 -->
+            <div class="col-md-4 col-sm-6 product-item" data-name="Burger épicé au fromage">
+                <div class="gallery-card card border-0">
+                    <div class="card-img-wrapper">
+                        <img src="media/sandwich/burger épicé au frommage.jpeg" alt="Burger épicé au fromage" onclick="openModal(this.src, 'Burger épicé au fromage')" onerror="this.src='https://images.unsplash.com/photo-1550507992-eb63ffee0847?w=400&auto=format&fit=crop'">
+                        <span class="category-badge">Épicé</span>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5>Burger épicé au fromage</h5>
+                        <button class="btn-commander" onclick="commander('Burger épicé au fromage')">
+                            <i class="fab fa-whatsapp"></i> Commander
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sandwich 8 -->
+            <div class="col-md-4 col-sm-6 product-item" data-name="Hamburger allongée">
+                <div class="gallery-card card border-0">
+                    <div class="card-img-wrapper">
+                        <img src="media/sandwich/hamburger allongée.jpeg" alt="Hamburger allongée" onclick="openModal(this.src, 'Hamburger allongée')" onerror="this.src='https://images.unsplash.com/photo-1550507992-eb63ffee0847?w=400&auto=format&fit=crop'">
+                        <span class="category-badge">Hamburger</span>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5>Hamburger allongée</h5>
+                        <button class="btn-commander" onclick="commander('Hamburger allongée')">
+                            <i class="fab fa-whatsapp"></i> Commander
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sandwich 9 -->
+            <div class="col-md-4 col-sm-6 product-item" data-name="Hamburger aux épices">
+                <div class="gallery-card card border-0">
+                    <div class="card-img-wrapper">
+                        <img src="media/sandwich/hamburger aux epices.jpeg" alt="Hamburger aux épices" onclick="openModal(this.src, 'Hamburger aux épices')" onerror="this.src='https://images.unsplash.com/photo-1550507992-eb63ffee0847?w=400&auto=format&fit=crop'">
+                        <span class="category-badge">Hamburger</span>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5>Hamburger aux épices</h5>
+                        <button class="btn-commander" onclick="commander('Hamburger aux épices')">
+                            <i class="fab fa-whatsapp"></i> Commander
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sandwich 10 -->
+            <div class="col-md-4 col-sm-6 product-item" data-name="Hamburger et frites">
+                <div class="gallery-card card border-0">
+                    <div class="card-img-wrapper">
+                        <img src="media/sandwich/hamburger et frites.jpeg" alt="Hamburger et frites" onclick="openModal(this.src, 'Hamburger et frites')" onerror="this.src='https://images.unsplash.com/photo-1550507992-eb63ffee0847?w=400&auto=format&fit=crop'">
+                        <span class="category-badge">Hamburger</span>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5>Hamburger et frites</h5>
+                        <button class="btn-commander" onclick="commander('Hamburger et frites')">
+                            <i class="fab fa-whatsapp"></i> Commander
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sandwich 11 -->
+            <div class="col-md-4 col-sm-6 product-item" data-name="Mini sandwich">
+                <div class="gallery-card card border-0">
+                    <div class="card-img-wrapper">
+                        <img src="media/sandwich/mini sandwich.jpeg" alt="Mini sandwich" onclick="openModal(this.src, 'Mini sandwich')" onerror="this.src='https://images.unsplash.com/photo-1550507992-eb63ffee0847?w=400&auto=format&fit=crop'">
+                        <span class="category-badge">Mini</span>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5>Mini sandwich</h5>
+                        <button class="btn-commander" onclick="commander('Mini sandwich')">
+                            <i class="fab fa-whatsapp"></i> Commander
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sandwich 12 -->
+            <div class="col-md-4 col-sm-6 product-item" data-name="Sandwich au poulet">
+                <div class="gallery-card card border-0">
+                    <div class="card-img-wrapper">
+                        <img src="media/sandwich/sandwich au poulet.jpeg" alt="Sandwich au poulet" onclick="openModal(this.src, 'Sandwich au poulet')" onerror="this.src='https://images.unsplash.com/photo-1550507992-eb63ffee0847?w=400&auto=format&fit=crop'">
+                        <span class="category-badge">Classique</span>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5>Sandwich au poulet</h5>
+                        <button class="btn-commander" onclick="commander('Sandwich au poulet')">
+                            <i class="fab fa-whatsapp"></i> Commander
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sandwich 13 -->
+            <div class="col-md-4 col-sm-6 product-item" data-name="Sandwich jambon fromage">
+                <div class="gallery-card card border-0">
+                    <div class="card-img-wrapper">
+                        <img src="media/sandwich/sandwich jambon fromage.jpeg" alt="Sandwich jambon fromage" onclick="openModal(this.src, 'Sandwich jambon fromage')" onerror="this.src='https://images.unsplash.com/photo-1550507992-eb63ffee0847?w=400&auto=format&fit=crop'">
+                        <span class="category-badge">Classique</span>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5>Sandwich jambon fromage</h5>
+                        <button class="btn-commander" onclick="commander('Sandwich jambon fromage')">
+                            <i class="fab fa-whatsapp"></i> Commander
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Message si aucun résultat -->
+        <div id="noResults" class="text-center py-5" style="display:none;">
+            <i class="fas fa-search fa-3x text-muted mb-3"></i>
+            <h4 class="text-muted">Aucun sandwich trouvé</h4>
+            <p class="text-muted">Essayez avec un autre mot-clé</p>
+        </div>
+
+    </section>
+
+    <!-- ===== MODAL ===== -->
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle">Sandwich</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <img src="" alt="Agrandissement" class="modal-img" id="modalImage">
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-success btn-commander" onclick="commanderFromModal()">
+                        <i class="fab fa-whatsapp me-2"></i> Commander ce sandwich
+                    </button>
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="container text-center">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Adechinan Food</h5>
+                    <p>La gastronomie à votre porte.</p>
+                </div>
+                <div class="col-md-6">
+                    <h5>Contact</h5>
+                    <p><i class="fas fa-phone"></i> +229 01 57 92 97 03</p>
+                    <p><i class="fas fa-map-pin"></i> Porto-Novo, Bénin</p>
+                    <p><i class="fas fa-truck"></i> Livraison partout au Bénin</p>
+                </div>
+            </div>
+            <hr class="bg-secondary">
+            <p class="small mb-0">&copy; 2026 Adechinan Food. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <!-- ===== WHATSAPP FLOTTANT ===== -->
+    <a href="https://wa.me/229157929703" target="_blank" class="whatsapp-float" title="WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const phoneNumber = '229157929703';
+        let currentModalProduct = '';
+
+        function commander(productName) {
+            const message = `Bonjour Adechinan Food,%0A%0AJe souhaite commander : *${productName}*%0A%0APouvez-vous me donner plus d'informations sur ce produit ?%0A%0AMerci !`;
+            window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
+        }
+
+        function openModal(imgSrc, productName) {
+            document.getElementById('modalImage').src = imgSrc;
+            document.getElementById('modalTitle').textContent = productName;
+            currentModalProduct = productName;
+            const modal = new bootstrap.Modal(document.getElementById('imageModal'));
+            modal.show();
+        }
+
+        function commanderFromModal() {
+            if (currentModalProduct) {
+                commander(currentModalProduct);
+            }
+        }
+
+        function filterProducts() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const items = document.getElementsByClassName('product-item');
+            let visibleCount = 0;
+
+            for (let item of items) {
+                const name = item.getAttribute('data-name').toLowerCase();
+                if (name.includes(input)) {
+                    item.style.display = '';
+                    visibleCount++;
+                } else {
+                    item.style.display = 'none';
+                }
+            }
+
+            document.getElementById('visibleCount').textContent = visibleCount;
+            document.getElementById('noResults').style.display = visibleCount === 0 ? 'block' : 'none';
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const totalItems = document.getElementsByClassName('product-item').length;
+            document.getElementById('visibleCount').textContent = totalItems;
+        });
+    </script>
+</body>
+</html>
